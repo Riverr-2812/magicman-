@@ -1,0 +1,176 @@
+﻿@model GioHangViewModel
+
+
+
+
+    <li class="nav-item dropdown">
+        <a href="/Admin/SanPham/GioHang" class="nav-link dropdown-toggle" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="icon icon-shopping_cart"></span>
+            <span class="cart-count">@Model.dsgioHang.Count()</span> <!-- Số lượng sản phẩm trong giỏ hàng -->
+
+        </a>
+
+        <div class="tong">
+            <div class="dropdown-menu dropdown-menu-right cart-dropdown" aria-labelledby="dropdown04">
+                <div class="cart-product">
+                    @foreach (var item in Model.dsgioHang)
+                    {
+                        <div class="product">
+
+                            <figure class="product-image-container">
+                                <a href="product.html" class="product-image">
+                                    <img src="@item.sanphams.ImageURL"  alt="product">
+                                </a>
+                            </figure>
+                            <div class="product-cart-details">
+                                <h4 class="product-title">
+                                    <a href="product.html">@item.sanphams.Name</a>
+                                </h4>
+                                <span class="cart-product-info">
+                                    <span class="cart-product-qty">@item.Quanlity</span>
+                                    x $@item.giatien
+                                </span>
+                            </div>
+                            <a asp-area="Admin" asp-controller="SanPham" asp-action="Xoasp" asp-route-xoasp="@item.sanphamId" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
+
+
+                        </div>
+                    }
+                    <!-- Thêm sản phẩm khác tại đây nếu cần -->
+                </div>
+
+                <div class="dropdown-cart-total">
+                    <span class="total">Total</span>
+                    <span class="cart-total-price">@Model.hoaDons.Total</span> <!-- Tổng giá trị của giỏ hàng -->
+                </div>
+
+
+                <div class="dropdown-cart-action">
+                    <a href="/Admin/SanPham/GioHang" class="btn btn-primary">View Cart</a> <!-- Đường dẫn đến trang giỏ hàng -->
+                    <a href="/Admin/SanPham/Thanhtoan" class="btn btn-outline-primary-2"><span>Checkout</span><i class="icon-long-arrow-right"></i></a> <!-- Đường dẫn đến trang thanh toán -->
+                </div>
+            </div>
+        </div>
+    </li>
+
+
+
+
+<style>
+    .tong{
+        background-color: #808080;
+    }
+    .btn-primary{
+        margin-left: 10px;
+    }
+    .btn-outline-primary-2{
+        margin-left: auto;
+        margin-right: 10px;
+    }
+    .dropdown-cart-action{
+        display: flex;
+    }
+    .total{
+        margin-left:10px;
+    }    
+    .dropdown-cart-total {
+        display:flex;
+        margin-bottom: 20px;
+    }
+    .cart-total-price{
+        margin-left:auto;
+        margin-right:10px;
+    }
+    img {
+        width: 50px;
+        height: 50px;
+    }
+
+    .dropdown-toggle::after {
+        display: none; /* Ẩn mục tam giác */
+    }
+
+    .dropdown-toggle:hover span {
+        color: #c49b63; /* Thay đổi màu của biểu tượng khi rê chuột */
+    }
+
+    .dropdown-toggle .icon {
+        cursor: pointer; /* Đặt kiểu con trỏ là ngón tay */
+    }
+
+    .icon {
+        font-size: 25px;
+    }
+
+    */ */
+    /* Style cho giỏ hàng */
+    .cart-dropdown {
+        width: 150px; /* Độ rộng tối thiểu của dropdown */
+    }
+
+    .cart-count {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        background-color: #ff0000; /* Màu nền của số lượng sản phẩm */
+        color: #fff; /* Màu chữ của số lượng sản phẩm */
+        border-radius: 50%; /* Để tạo hình tròn */
+        width: 24px;
+        height: 24px;
+        text-align: center;
+        line-height: 24px;
+    }
+
+    /* Style sản phẩm trong giỏ hàng */
+    .cart-product {
+        padding: 10px;
+    }
+
+    .product {
+        /*       display: flex;
+           text-align:left;
+            justify-content: space-between;
+            width:300px;
+     */
+        display: flex; /* Sử dụng hiển thị kiểu flex để căn chỉnh chữ và hình ảnh cùng hàng */
+        align-items: center; /* Căn chỉnh nội dung theo chiều dọc */
+        justify-content: space-between;
+    }
+
+    .product-title a {
+        color: #333; /* Màu chữ của tên sản phẩm */
+        white-space: normal; /* Cho phép chữ tràn xuống dòng */
+        text-overflow: ellipsis; /* Nếu quá dài, hiển thị dấu elipsis (...) */
+        overflow: hidden; /* Ẩn nội dung dư thừa */
+        font-size: 15px;
+     
+    }
+
+    .product-title {
+        text-align: left;
+    }
+
+    .product-image {
+        max-width: 50px; /* Đặt độ rộng tối đa cho hình ảnh */
+        margin-right: 10px; /* Tạo khoảng cách giữa hình ảnh và nội dung */
+    }
+
+    .product-cart-details {
+        width: 250px; /* Tính toán chiều rộng mới */
+      
+        text-overflow: ellipsis; /* Nếu quá dài, hiển thị dấu elipsis (...) */
+        overflow: hidden; /* Ẩn nội dung dư thừa */
+        white-space: normal; /* Chữ sẽ không tràn xuống dòng */
+        margin-top:-18px;
+    }
+
+   
+
+
+    /* Thêm các style khác tùy theo yêu cầu của bạn */
+
+
+</style>
+   
+
+

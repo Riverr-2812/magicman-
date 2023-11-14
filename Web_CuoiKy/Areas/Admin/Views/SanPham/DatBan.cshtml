@@ -1,0 +1,195 @@
+﻿@model DatBan
+
+<style>
+	.bang{
+
+		background-image: url(/images/bg_1.jpg);
+		background-size: cover; /* Hiển thị ảnh full trong phạm vi của thẻ div */
+		background-position: center center; /* Đặt ảnh nền ở giữa cả theo chiều ngang và chiều dọc */
+		background-repeat: no-repeat; /* Không lặp lại ảnh nền */
+		height: 800px; /* Đặt chiều cao của thẻ div */
+
+	}
+.datban{
+	color:white;
+}
+
+	.appointment-forms input::placeholder {
+		font-weight: 700; /* Đặt độ đậm của placeholder */
+		color: #999; /* Đặt màu của placeholder */
+	}
+
+	.appointment-forms input {
+		border: 1px solid rgba(255, 255, 255, 0.2); /* Đặt viền cho ô nhập */
+		padding: 10px; /* Đặt khoảng cách giữa nội dung và đường viền */
+		background-color: rgba(255, 255, 255, 0.1); /* Màu nền của ô nhập */
+	
+	}
+
+	.search-container {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border: 0.5px solid #555;
+	}
+
+	/* Thiết lập kiểu dáng cho ô input và container chứa nó */
+	.search-input-container {
+		position: relative;
+		width: 350px; /* Độ rộng của ô tìm kiếm */
+	}
+
+	.search-input {
+		padding: 10px;
+		border: none;
+		border-radius: 5px;
+		box-sizing: border-box;
+		width: 100%; /* Chiếm toàn bộ chiều rộng của container */
+		font-size: 16px; /* Kích thước chữ */
+		font-weight: bold; /* Chữ đậm */
+		background-color: transparent;
+		outline: none; /* Loại bỏ đường viền khi focus */
+	}
+
+	/* Thiết lập kiểu dáng cho nút kính lúp */
+	.search-button {
+		position: absolute;
+		top: 50%;
+		right: 5px;
+		transform: translateY(-50%);
+		padding: 10px;
+		border: none;
+		background-color: transparent; /* Background không có màu */
+
+		cursor: pointer;
+		font-size: 20px; /* Kích thước chữ của nút kính lúp */
+	}
+
+	/* Ẩn các biểu tượng của nút submit trong form */
+	form .search-input-container {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+		form .search-input-container input[type="submit"] {
+			display: none;
+		}
+
+	
+</style>
+<body>
+<div class="datban">
+		<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+			<div class="container">
+				<a class="navbar-brand" href="~/index.html">Coffee<small>Blend</small></a>
+				<form asp-action="SpTimkiem" asp-controller="SanPham" asp-area="Admin" method="post" class="search-container" onsubmit="return validateForm()" id="appointment-forms">
+					<div class="search-input-container">
+
+						<input type="text" class="search-input" id="kocoem" placeholder="Tìm kiếm..." name="search">
+						<button type="submit" class="search-button">&#128269;</button>
+
+					</div>
+				</form>
+
+				<div class="collapse navbar-collapse" id="ftco-nav">
+					<ul class="navbar-nav ml-auto">
+						<li class="nav-item active"><a href="/Customer/Home/Index" class="nav-link">Home</a></li>
+						<li class="nav-item"><a href="~/menu.html" class="nav-link">Menu</a></li>
+						<li class="nav-item"><a href="~/Admin/SanPham/DatBan" class="nav-link">Đặt bàn</a></li>
+						<partial name="_LoginPartial" />
+						@await Component.InvokeAsync("Nhacungcap")
+						@* 					<li class="nav-item cart"><a href="/Admin/SanPham/GioHang" class="nav-link"><span class="icon icon-shopping_cart"></span><span class="bag d-flex justify-content-center align-items-center"><small></small></span></a></li>
+						*@
+					</ul>
+
+
+
+
+
+					</ul>
+				</div>
+			</div>
+		</nav>
+<!-- END nav -->
+<section class="ftco-appointment bang">
+	<div class="overlay"></div>
+	<div class="container-wrap">
+		<div class="row no-gutters d-md-flex align-items-center">
+			@* 	<div class="col-md-6 d-flex align-self-stretch" id="map">
+				
+			</div> *@
+			<div class="col-md-6 appointment ftco-animate form-left cot">
+				<h3 class="mb-3">Book a Table</h3>
+					<form action="/Admin/SanPham/DatBan" class="appointment-forms" method="post" id="appointment-form">
+					<div class="d-md-flex">
+						<div class="form-group">
+							<input type="text" class="form-control" placeholder="First Name" asp-for="TenNguoiDat" style="background-color:transparent; outline:none;">
+						</div>
+					
+					</div>
+					<div class="d-md-flex">
+						<div class="form-group">
+
+									<i class="fas fa-calendar"></i>
+									<input type="text" class="form-control appointment_date" placeholder="Date" asp-for="NgayDat">
+						
+						</div>
+					</div>
+					<div class="d-md-flex">
+						<div class="form-group ">
+							<input type="number" class="form-control" placeholder="Số lượng" asp-for="Soluong">
+						</div>
+					</div>
+					<div class="d-md-flex">
+						<div class="form-group">
+							<input type="text" class="form-control" placeholder="Phone" asp-for="SDT">
+						</div>
+					</div>
+					<div class="d-md-flex">
+						<div class="form-group ">
+							<input type="email" class="form-control" placeholder="Nhập email" asp-for="Email">
+						</div>
+					</div>
+					<div class="d-md-flex">
+						<div class="form-group">
+								<input type="text" id="" cols="30" rows="2" class="form-control" placeholder="Message" asp-for="GhiChu"/>
+							</div>
+						<div class="form-group ">
+								<input type="submit" value="Appointment" class="btn btn-primary py-3 px-4" id="show-popup" >
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+</div>
+</body>
+<script>
+	document.getElementById("appointment-form").addEventListener("submit", function (event) {
+		event.preventDefault(); // Ngăn trình duyệt thực hiện POST request mặc định
+
+		Swal.fire({
+			title: "TỐI NAY ĐƯỢC ĂN VỚI EM GHỆ RỒI",
+			text: "VUI LÒNG CHECK EMAIL CÓ CẢ SỐ PHÒNG",
+			imageUrl: "https://mcdn.coolmate.me/image/April2023/meme-anh-da-den-1465_0010_12.jpg",
+			imageWidth: 400,
+			imageHeight: 200,
+			imageAlt: "Custom image",
+			showCancelButton: true,
+			confirmButtonText: "OK",
+		}).then((result) => {
+			if (result.isConfirmed) {
+				document.getElementById("appointment-form").submit(); // Đây là ví dụ submit biểu mẫu
+			}
+		});
+	});
+
+	
+
+	
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.all.min.js"></script>

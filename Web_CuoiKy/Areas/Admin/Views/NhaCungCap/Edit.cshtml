@@ -1,0 +1,21 @@
+﻿@model Nhacungcap
+<form method="post" asp-action="edit">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label">Email Theloai</label>
+        <input asp-for="Name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ImageURL" class="form-label">Tên tp</label>
+        <input asp-for="ImageURL" type="text" class="form-control" id="exampleInputPassword1">
+        <span asp-validation-for="ImageURL" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">LƯU</button>
+    <button asp-controller="NhaCungCap" asp-action="Index" type="submit" class="btn btn-primary">HỦY</button>
+</form>
+
+

@@ -1,0 +1,55 @@
+﻿@model Nhacungcap
+<form method="post" asp-action="deleteconfirm">
+    <input asp-for="Id" type="hidden" />
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label">Email Theloai</label>
+        <input asp-for="Name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+ 
+    <div class="mb-3">
+        <label asp-for="ImageURL" class="form-label">Tên tp</label>
+        <input asp-for="ImageURL" type="text" class="form-control" id="exampleInputPassword1">
+        <span asp-validation-for="ImageURL" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">XÓA</button>
+    <button asp-controller="NhaCungCap" asp-action="Index" type="submit" class="btn btn-primary">HỦY</button>
+</form>
+<script>
+    function confirmDelete(id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Gọi Ajax để xóa dữ liệu dựa trên id
+                $.ajax({
+                    url: '/ControllerName/Delete', // Thay 'ControllerName' bằng tên thực tế của controller
+                    type: 'POST',
+                    data: { id: id },
+                    success: function (response) {
+                        if (response.success) {
+                            Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+                            // Tùy chỉnh cập nhật giao diện người dùng hoặc thực hiện các hành động khác ở đây
+                        } else {
+                            Swal.fire('Error', 'An error occurred while deleting the file.', 'error');
+                        }
+                    },
+                    error: function () {
+                        Swal.fire('Error', 'An error occurred while deleting the file.', 'error');
+                    }
+                });
+            }
+        });
+    }
+</script>
+

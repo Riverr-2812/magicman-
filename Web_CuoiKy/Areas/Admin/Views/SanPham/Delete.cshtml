@@ -1,0 +1,37 @@
+﻿@model Sanpham
+<form method="post" asp-action="Deletes">
+    <input asp-for="Id" type="hidden" />
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label">TÊN sản phẩm</label>
+        <input asp-for="Name" type="text" class="form-control" disabled>
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+  
+    <div class="mb-3">
+        <label asp-for="ImageURL" class="form-label">Ảnh</label>
+        <input asp-for="ImageURL" type="text" class="form-control" id="exampleInputPassword1" disabled>
+        <span asp-validation-for="ImageURL" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Gia" class="form-label">Gia</label>
+        <input asp-for="Gia" type="text" class="form-control" id="exampleInputPassword1" disabled>
+        <span asp-validation-for="Gia" class="text-danger"></span>
+    </div>
+    
+
+    <div class="mb-3">
+        <label asp-for="NhacungcapId" class="form-label">Số id nhà cung cấp</label>
+        <select asp-for="NhacungcapId" asp-items="ViewBag.DSTHELOAI" class="form-control" disabled>
+            <option value="">Chọn nhà cung cấp</option>
+        </select>
+        <span asp-validation-for="NhacungcapId" class="text-danger"></span>
+    </div>
+    <button type="button" class="btn btn-primary" onclick="confirmDelete(@Model.Id)">XÓA</button>
+
+
+    <button asp-controller="SanPham" asp-action="Index" type="submit" class="btn btn-primary">HỦY</button>
+</form>
+
+
+

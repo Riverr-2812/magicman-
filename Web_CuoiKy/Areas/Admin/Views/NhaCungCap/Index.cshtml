@@ -1,0 +1,31 @@
+﻿@model Nhacungcap
+
+
+<table class="table caption-top">
+    <thead>
+        <tr>
+            <th scope="col">Id
+            <th scope="col">Tên truyện</th>
+            <th scope="col">Ảnh</th>
+            <th>Chức năng</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in @ViewBag.Nhacungcap)
+        {
+            <tr>
+
+                <td>@item.Id</td>
+                <td>@item.Name</td>
+                <td><img style="width: 100px;height:100px" src="@item.ImageURL" /></td>
+                <td><a asp-action="edit" asp-route-id="@item.Id">Edit</a></td>
+                <td><a asp-action="delete" asp-route-id="@item.Id">Delete</a></td>
+            </tr>
+
+        }
+
+    </tbody>
+</table>
+<a asp-controller="NhaCungCap" asp-action="Creates">tạo mới</a>
+

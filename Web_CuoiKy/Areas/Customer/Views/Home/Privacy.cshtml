@@ -1,0 +1,92 @@
+﻿
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+        <div class="container">
+            <a class="navbar-brand" href="~/index.html">Coffee<small>Blend</small></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="oi oi-menu"></span> Menu
+            </button>
+            <div class="collapse navbar-collapse" id="ftco-nav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active"><a href="/Customer/Home/Index" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="~/menu.html" class="nav-link">Menu</a></li>
+                    <li class="nav-item"><a href="~/services.html" class="nav-link">Services</a></li>
+                    <li class="nav-item"><a href="~/blog.html" class="nav-link">Blog</a></li>
+                    <li class="nav-item"><a href="~/Admin/SanPham/DatBan" class="nav-link">Đặt bàn</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="~/room.html" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Shop</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdown04">
+                            <a class="dropdown-item" href="~/shop.html">Shop</a>
+                            <a class="dropdown-item" href="~/product-single.html">Single Product</a>
+                            <a class="dropdown-item" href="~/cart.html">Cart</a>
+                            <a class="dropdown-item" href="~/checkout.html">Checkout</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item"><a href="~/contact.html" class="nav-link">Contact</a></li>
+                    <partial name="_LoginPartial" />
+                    @await Component.InvokeAsync("Nhacungcap")
+                    @* 					<li class="nav-item cart"><a href="/Admin/SanPham/GioHang" class="nav-link"><span class="icon icon-shopping_cart"></span><span class="bag d-flex justify-content-center align-items-center"><small></small></span></a></li>
+                    *@
+                </ul>
+
+
+
+
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+<div class="row g-0 hi">
+
+    <div class="col-lg-4 reservation-img aos-init aos-animate" style="background-image: url(assets/img/reservation.jpg);" data-aos="zoom-out" data-aos-delay="200"></div>
+
+    <div class="col-lg-8 d-flex align-items-center reservation-form-bg">
+        <form action="forms/book-a-table.php" method="post" role="form" class="php-email-form aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
+            <div class="row gy-4">
+                <div class="col-lg-4 col-md-6">
+                    <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
+                    <div class="validate"></div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email">
+                    <div class="validate"></div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <input type="text" class="form-control" name="phone" id="phone" placeholder="Your Phone" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
+                    <div class="validate"></div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <input type="text" name="date" class="form-control" id="date" placeholder="Date" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
+                    <div class="validate"></div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <input type="text" class="form-control" name="time" id="time" placeholder="Time" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
+                    <div class="validate"></div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <input type="number" class="form-control" name="people" id="people" placeholder="# of people" data-rule="minlen:1" data-msg="Please enter at least 1 chars">
+                    <div class="validate"></div>
+                </div>
+            </div>
+            <div class="form-group mt-3">
+                <textarea class="form-control" name="message" rows="5" placeholder="Message"></textarea>
+                <div class="validate"></div>
+            </div>
+            <div class="mb-3">
+                <div class="loading">Loading</div>
+                <div class="error-message d-block">TypeError: Failed to fetch</div>
+                <div class="sent-message">Your booking request was sent. We will call back or send an Email to confirm your reservation. Thank you!</div>
+            </div>
+            <div class="text-center"><button type="submit">Book a Table</button></div>
+        </form>
+    </div><!-- End Reservation Form -->
+
+</div>
+</body>
+<style>
+    .hi{
+        margin-top:100px;
+    }
+</style>

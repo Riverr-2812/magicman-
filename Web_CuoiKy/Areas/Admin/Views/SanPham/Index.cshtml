@@ -1,0 +1,102 @@
+﻿@model IEnumerable<Sanpham>
+<table class="table caption-top">
+    <thead>
+        <tr>
+            <th scope="col">Id
+            <th scope="col">Tên Món Ăn</th>
+            <th scope="col">Ảnh</th>
+            <th scope="col">Gía</th>
+            <th scope="col">Nhà hàng cung cấp</th>
+            <th>Chức năng</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in @Model)
+        {
+            <tr>
+
+                <td>@item.Id</td>
+                <td>@item.Name</td>
+             
+                <td><img style="width: 100px;height:100px" src="@item.ImageURL" /></td>
+                <td>@item.Gia</td>
+                <td>@item.nhacungcaps.Name</td>
+                <td>
+                    <a asp-action="Upsert" asp-route-id="@item.Id">Edit</a>
+                    <a asp-action="Details" asp-route-sanphamId="@item.Id">Details</a>
+                    <a onclick="confirmDelete(@item.Id)">Delete</a>
+                </td>
+            </tr>
+
+        }
+
+    </tbody>
+</table>
+<a asp-controller="SanPham" asp-action="Upsert">tạo mới</a>
+<button id="show-popup">Hiển thị Popup</button>
+
+<div id="booking-popup" class="booking-popup-notification-wrapper">
+    <!-- Nội dung bảng popup ở đây --><p>hello</p>
+</div>
+<style>
+    .booking-popup-notification-wrapper {
+        display: none;
+        /* Thêm các thuộc tính CSS để định dạng bảng popup theo ý muốn */
+    }
+
+</style>
+
+<script>
+    var confirmedDelete = false; // Tạo biến cờ để kiểm tra xác nhận xóa
+
+    function confirmDelete(id) {
+        if (confirmedDelete) {
+            // Nếu đã xác nhận xóa trước đó, thì cho phép xóa ngay lập tức
+            performDelete(id);
+        } else {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    confirmedDelete = true; // Đặt cờ thành true nếu người dùng xác nhận xóa
+                    performDelete(id); // Gọi hàm xóa
+                }
+            });
+        }
+    }
+
+    function performDelete(id) {
+        // Gọi Ajax để xóa dữ liệu dựa trên id
+        $.ajax({
+            url: '/Admin/SanPham/Deletes/${id}',
+            type: 'POST',
+            data: { id: id },
+            success: function (response) {
+                if (response.success) {
+                    Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+                    setTimeout(function () {
+                        location.reload();
+                    }, 2000);
+                } else {
+                    Swal.fire('Error', 'An error occurred while deleting the file.', 'error');
+                }
+            },
+            error: function () {
+                Swal.fire('Error', 'An error occurred while deleting the file.', 'error');
+            }
+        });
+    }
+
+ 
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.all.min.js"></script>
+
+

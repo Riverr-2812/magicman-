@@ -1,0 +1,299 @@
+﻿@model IEnumerable<Sanpham>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Display</title>
+    <style>
+		body{
+			width:100%;
+			margin:0;
+			padding:0;
+		}
+        .search-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 0.5px solid #555;
+        }
+
+        /* Thiết lập kiểu dáng cho ô input và container chứa nó */
+        .search-input-container {
+            position: relative;
+            width: 350px; /* Độ rộng của ô tìm kiếm */
+        }
+
+        .search-input {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            box-sizing: border-box;
+            width: 100%; /* Chiếm toàn bộ chiều rộng của container */
+            font-size: 16px; /* Kích thước chữ */
+            font-weight: bold; /* Chữ đậm */
+            background-color: transparent;
+            outline: none; /* Loại bỏ đường viền khi focus */
+        }
+
+        /* Thiết lập kiểu dáng cho nút kính lúp */
+        .search-button {
+            position: absolute;
+            top: 50%;
+            right: 5px;
+            transform: translateY(-50%);
+            padding: 10px;
+            border: none;
+            background-color: transparent; /* Background không có màu */
+
+            cursor: pointer;
+            font-size: 20px; /* Kích thước chữ của nút kính lúp */
+        }
+
+        /* Ẩn các biểu tượng của nút submit trong form */
+        form {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+            form input[type="submit"] {
+                display: none;
+            }
+            container{
+            z-index: 0; /* Bạn có thể xóa dòng này vì có vẻ không cần thiết */
+            width: 100%;
+            height: auto;
+            background-color: wheat;
+            clear: both; /* Thêm dòng này để đảm bảo container không nằm chồng lên các phần khác */
+            overflow: hidden; /* Thêm dòng này để xử lý việc container chồng lên navbar */
+            }
+
+	
+
+	
+
+	
+                </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+        <div class="container">
+            <a class="navbar-brand" href="~/index.html">Coffee<small>Blend</small></a>
+            <form asp-action="SpTimkiem" asp-controller="SanPham" asp-area="Admin" method="post" class="search-container">
+                <div class="search-input-container">
+
+                    <input type="text" class="search-input" placeholder="Tìm kiếm..." name="search">
+                    <button type="submit" class="search-button">&#128269;</button>
+
+                </div>
+            </form>
+
+            <div class="collapse navbar-collapse" id="ftco-nav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active"><a href="/Customer/Home/Index" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="~/menu.html" class="nav-link">Menu</a></li>
+                    <li class="nav-item"><a href="~/Admin/SanPham/DatBan" class="nav-link">Đặt bàn</a></li>
+                    <partial name="_LoginPartial" />
+                    @await Component.InvokeAsync("Nhacungcap")
+                    @* 					<li class="nav-item cart"><a href="/Admin/SanPham/GioHang" class="nav-link"><span class="icon icon-shopping_cart"></span><span class="bag d-flex justify-content-center align-items-center"><small></small></span></a></li>
+                    *@
+                </ul>
+
+
+
+
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+	<section class="ftco-menu">
+		<div class="container-fluid">
+			<div class="row justify-content-center mb-5">
+				<div class="col-md-7 heading-section text-center ftco-animate fadeInUp ftco-animated">
+					<span class="subheading">Discover</span>
+					<h2 class="mb-4">Our Products</h2>
+					<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+				</div>
+			</div>
+			<div class="row d-md-flex">
+				<div class="col-lg-12 ftco-animate p-md-5 fadeInUp ftco-animated">
+					<div class="row">
+					@* 	<div class="col-md-12 nav-link-wrap mb-5">
+							<div class="nav ftco-animate nav-pills justify-content-center fadeInUp ftco-animated" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+								<a class="nav-link active show" id="v-pills-1-tab" data-toggle="pill" href="/#v-pills-1" role="tab" aria-controls="v-pills-1" aria-selected="true">Main Dish</a>
+
+								<a class="nav-link" id="v-pills-2-tab" data-toggle="pill" href="/#v-pills-2" role="tab" aria-controls="v-pills-2" aria-selected="false">Drinks</a>
+
+								<a class="nav-link" id="v-pills-3-tab" data-toggle="pill" href="/#v-pills-3" role="tab" aria-controls="v-pills-3" aria-selected="false">Desserts</a>
+							</div>
+						</div> *@
+						<div class="col-md-12 d-flex align-items-center">
+
+							<div class="tab-content ftco-animate fadeInUp ftco-animated" id="v-pills-tabContent">
+
+								<div class="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="v-pills-1-tab">
+									<div class="row">
+										@foreach(var item in Model){
+										<div class="col-md-3 text-center">
+											<div class="menu-wrap">
+												<a class="menu-img img mb-4" style="background-image: url(@item.ImageURL)"></a>
+												<div class="text">
+													<h3><a href="/#">Cafe đen</a></h3>
+													<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
+													<p class="price"><span>$100000</span></p>
+													<p><a class="btn btn-primary btn-outline-primary" href="/Admin/SanPham/giohangid?sanphamId=5">Add to cart</a></p>
+												</div>
+											</div>
+										</div>
+										}
+										@* <div class="col-md-3 text-center">
+											<div class="menu-wrap">
+												<a class="menu-img img mb-4" style="background-image: url(https://scontent.xx.fbcdn.net/v/t1.15752-9/399880387_300114476314351_6968922873116219390_n.png?stp=dst-png_p206x206&amp;_nc_cat=102&amp;ccb=1-7&amp;_nc_sid=510075&amp;_nc_eui2=AeG2aoa3XLUnlc41ECmLcx6BdZnmh72y1VJ1meaHvbLVUr7zCDKG7sqFmkvH6UFAxyy9HeXL0WB9aGz_tQKEVlHN&amp;_nc_ohc=oEHs_wXCdYsAX_6dNVh&amp;_nc_ad=z-m&amp;_nc_cid=0&amp;_nc_ht=scontent.xx&amp;oh=03_AdShZgaxJWDCCztcXlZxcAPg9bKXRnLN4Hbp41kALAyFGg&amp;oe=657400EF);" href="/Admin/SanPham/Details?sanphamId=6"></a>
+												<div class="text">
+													<h3><a href="/#">Capuchino</a></h3>
+													<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
+													<p class="price"><span>$200000</span></p>
+													<p><a class="btn btn-primary btn-outline-primary" href="/Admin/SanPham/giohangid?sanphamId=6">Add to cart</a></p>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-3 text-center">
+											<div class="menu-wrap">
+												<a class="menu-img img mb-4" style="background-image: url(https://bewinemart.ducanhzed.com/wp-content/uploads/2019/05/Bia-den-Duc-su-dung-nguyen-lieu-nguyen-chat-khong-qua-rang.jpg);" href="/Admin/SanPham/Details?sanphamId=7"></a>
+												<div class="text">
+													<h3><a href="/#">Bia đen đức</a></h3>
+													<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
+													<p class="price"><span>$150000</span></p>
+													<p><a class="btn btn-primary btn-outline-primary" href="/Admin/SanPham/giohangid?sanphamId=7">Add to cart</a></p>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-3 text-center">
+											<div class="menu-wrap">
+												<a class="menu-img img mb-4" style="background-image: url(https://ruouvang24h.vn/wp-content/uploads/2020/07/Top-10-Chai-R%C6%B0%E1%BB%A3u-Vang-%C4%90%E1%BB%8F.jpg);" href="/Admin/SanPham/Details?sanphamId=8"></a>
+												<div class="text">
+													<h3><a href="/#">Rượu vang pháp</a></h3>
+													<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
+													<p class="price"><span>$100000</span></p>
+													<p><a class="btn btn-primary btn-outline-primary" href="/Admin/SanPham/giohangid?sanphamId=8">Add to cart</a></p>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-3 text-center">
+											<div class="menu-wrap">
+												<a class="menu-img img mb-4" style="background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFZFxqfP7zVNmOcYuYDvyrsxtSLmaIuRblfg&amp;usqp=CAU);" href="/Admin/SanPham/Details?sanphamId=9"></a>
+												<div class="text">
+													<h3><a href="/#">Bít tết</a></h3>
+													<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
+													<p class="price"><span>$100000</span></p>
+													<p><a class="btn btn-primary btn-outline-primary" href="/Admin/SanPham/giohangid?sanphamId=9">Add to cart</a></p>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-3 text-center">
+											<div class="menu-wrap">
+												<a class="menu-img img mb-4" style="background-image: url(https://www.lorca.vn/wp-content/uploads/2021/05/cach-lam-suon-nuong-mat-ong-bang-noi-chien-khong-dau.jpg);" href="/Admin/SanPham/Details?sanphamId=10"></a>
+												<div class="text">
+													<h3><a href="/#">Sườn nướng</a></h3>
+													<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
+													<p class="price"><span>$200000</span></p>
+													<p><a class="btn btn-primary btn-outline-primary" href="/Admin/SanPham/giohangid?sanphamId=10">Add to cart</a></p>
+												</div>
+											</div>
+										</div> *@
+
+									</div>
+								</div>
+
+								<div class="tab-pane fade" id="v-pills-2" role="tabpanel" aria-labelledby="v-pills-2-tab">
+									<div class="row">
+										<div class="col-md-3 text-center w-100">
+											<div class="menu-wrap">
+												<a href="/#" class="menu-img img mb-4" style="background-image: url(/images/drink-1.jpg);"></a>
+												<div class="text">
+													<h3><a href="/#">Lemonade Juice</a></h3>
+													<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
+													<p class="price"><span>$2.90</span></p>
+													<p><a href="/#" class="btn btn-primary btn-outline-primary">Add to cart</a></p>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-3 text-center">
+											<div class="menu-wrap">
+												<a href="/#" class="menu-img img mb-4" style="background-image: url(/images/drink-2.jpg);"></a>
+												<div class="text">
+													<h3><a href="/#">Pineapple Juice</a></h3>
+													<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
+													<p class="price"><span>$2.90</span></p>
+													<p><a href="/#" class="btn btn-primary btn-outline-primary">Add to cart</a></p>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-3 text-center">
+											<div class="menu-wrap">
+												<a href="/#" class="menu-img img mb-4" style="background-image: url(/images/drink-3.jpg);"></a>
+												<div class="text">
+													<h3><a href="/#">Soda Drinks</a></h3>
+													<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
+													<p class="price"><span>$2.90</span></p>
+													<p><a href="/#" class="btn btn-primary btn-outline-primary">Add to cart</a></p>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="tab-pane fade" id="v-pills-3" role="tabpanel" aria-labelledby="v-pills-3-tab">
+									<div class="row">
+										<div class="col-md-3 text-center">
+											<div class="menu-wrap">
+												<a href="/#" class="menu-img img mb-4" style="background-image: url(/images/dessert-1.jpg);"></a>
+												<div class="text">
+													<h3><a href="/#">Hot Cake Honey</a></h3>
+													<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
+													<p class="price"><span>$2.90</span></p>
+													<p><a href="/#" class="btn btn-primary btn-outline-primary">Add to cart</a></p>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-3 text-center">
+											<div class="menu-wrap">
+												<a href="/#" class="menu-img img mb-4" style="background-image: url(/images/dessert-2.jpg);"></a>
+												<div class="text">
+													<h3><a href="/#">Hot Cake Honey</a></h3>
+													<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
+													<p class="price"><span>$2.90</span></p>
+													<p><a href="/#" class="btn btn-primary btn-outline-primary">Add to cart</a></p>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-3 text-center">
+											<div class="menu-wrap">
+												<a href="/#" class="menu-img img mb-4" style="background-image: url(/images/dessert-3.jpg);"></a>
+												<div class="text">
+													<h3><a href="/#">Hot Cake Honey</a></h3>
+													<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
+													<p class="price"><span>$2.90</span></p>
+													<p><a href="/#" class="btn btn-primary btn-outline-primary">Add to cart</a></p>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+ 
+</body>
+</html>
+
+
+
